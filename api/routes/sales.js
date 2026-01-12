@@ -6,7 +6,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { supabase, getPublicUrl, uploadFile } = require('../utils/supabase');
+const { supabase, STORAGE_BUCKETS, getPublicUrl, uploadFile } = require('../utils/supabase');
 const {
     validateRequired,
     validatePositiveNumber,
@@ -22,6 +22,55 @@ const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
         fileSize: 4 * 1024 * 1024 // 4MB
+    }
+});
+
+// ============================================================================
+// GET /api/sales/stats - Estadísticas de ventas
+// ============================================================================
+
+router.get('/stats', async (req, res) => {
+    try {
+        // Obtener estadísticas generales de ventas
+        const { data: stats, error } = await supabase.rpc('get_sales_stats');
+        
+        if (error) {
+            // Si la función no existe, calcular manualmente
+            const { data: allSales, error: salesError } = await supabase
+                .from('sales')
+                .select('sale_type, total_amount, payment_status');
+                
+            if (salesError) throw salesError;
+            
+            // Calcular estadísticas manualmente
+            const totalSales = allSales.length;
+            const packageSales = allSales.filter(sale => sale.sale_type === 'package').length;
+            const individualSales = allSales.filter(sale => sale.sale_type === 'individual').length;
+            const totalRevenue = allSales
+                .filter(sale => sale.payment_status === 'confirmado')
+                .reduce((sum, sale) => sum + parseFloat(sale.total_amount || 0), 0);
+            
+            return res.json({
+                success: true,
+                data: {
+                    total_sales: totalSales,
+                    package_sales: packageSales,
+                    individual_sales: individualSales,
+                    total_revenue: totalRevenue
+                }
+            });
+        }
+        
+        res.json({
+            success: true,
+            data: stats
+        });
+    } catch (error) {
+        console.error('Error obteniendo estadísticas de ventas:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Error interno del servidor'
+        });
     }
 });
 
@@ -195,7 +244,7 @@ router.post('/package', upload.single('receipt'), async (req, res) => {
             const safeName = sanitizeFilename(req.file.originalname);
             receipt_filename = `${Date.now()}-${safeName}`;
 
-            await uploadFile('receipts', receipt_filename, req.file.buffer, req.file.mimetype);
+            await uploadFile(STORAGE_BUCKETS.RECEIPTS, receipt_filename, req.file.buffer, req.file.mimetype);
         }
 
         // Calcular total
@@ -334,7 +383,7 @@ router.post('/individual', upload.single('receipt'), async (req, res) => {
             const safeName = sanitizeFilename(req.file.originalname);
             receipt_filename = `${Date.now()}-${safeName}`;
 
-            await uploadFile('receipts', receipt_filename, req.file.buffer, req.file.mimetype);
+            await uploadFile(STORAGE_BUCKETS.RECEIPTS, receipt_filename, req.file.buffer, req.file.mimetype);
         }
 
         // Crear venta

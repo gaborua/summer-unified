@@ -126,3 +126,6 @@ class APIClient {
 
 // Crear instancia global
 const api = new APIClient();
+
+// También hacer la clase disponible globalmente para new APIClient()
+window.APIClient = APIClient;

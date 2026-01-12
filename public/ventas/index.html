@@ -259,16 +259,26 @@
         // Cargar estadísticas al cargar la página
         async function loadStats() {
             try {
-                const salesStats = await api.get('/sales/stats');
+                console.log('🔄 Cargando estadísticas de ventas...');
+                const response = await api.get('/sales/stats');
+                
+                // La API devuelve { success: true, data: { ... } }
+                const statsData = response.data || response;
                 
                 // Actualizar estadísticas en la UI
-                document.getElementById('totalSales').textContent = salesStats.total_sales || 0;
-                document.getElementById('packageSales').textContent = salesStats.package_sales || 0;
-                document.getElementById('individualSales').textContent = salesStats.individual_sales || 0;
-                document.getElementById('totalRevenue').textContent = `Bs. ${(salesStats.total_revenue || 0).toLocaleString()}`;
+                document.getElementById('totalSales').textContent = statsData.total_sales || 0;
+                document.getElementById('packageSales').textContent = statsData.package_sales || 0;
+                document.getElementById('individualSales').textContent = statsData.individual_sales || 0;
+                document.getElementById('totalRevenue').textContent = `Bs. ${(statsData.total_revenue || 0).toLocaleString()}`;
+                
+                console.log('✅ Estadísticas cargadas:', statsData);
                 
             } catch (error) {
-                console.error('Error cargando estadísticas:', error);
+                console.error('❌ Error cargando estadísticas:', error);
+                
+                // Mostrar notificación de error
+                showNotification(`Error cargando estadísticas: ${error.message}`, 'error');
+                
                 // Mostrar valores por defecto en caso de error
                 document.getElementById('totalSales').textContent = '0';
                 document.getElementById('packageSales').textContent = '0';

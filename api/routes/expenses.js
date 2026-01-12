@@ -6,7 +6,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { supabase, getPublicUrl, uploadFile } = require('../utils/supabase');
+const { supabase, STORAGE_BUCKETS, getPublicUrl, uploadFile } = require('../utils/supabase');
 const {
     validateRequired,
     validatePositiveNumber,
@@ -252,7 +252,7 @@ router.post('/', upload.single('receipt'), async (req, res) => {
             const safeName = sanitizeFilename(req.file.originalname);
             receipt_filename = `${Date.now()}-${safeName}`;
 
-            await uploadFile('expense-receipts', receipt_filename, req.file.buffer, req.file.mimetype);
+            await uploadFile(STORAGE_BUCKETS.RECEIPTS, receipt_filename, req.file.buffer, req.file.mimetype);
         }
 
         // Calcular precio unitario

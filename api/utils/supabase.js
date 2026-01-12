@@ -5,6 +5,13 @@
 
 const { createClient } = require('@supabase/supabase-js');
 
+// Constantes de buckets de storage
+const STORAGE_BUCKETS = {
+    RECEIPTS: 'receipts',
+    DOCUMENTS: 'documents',
+    EVENT_IMAGES: 'event-images'
+};
+
 // Validar variables de entorno
 if (!process.env.SUPABASE_URL) {
     throw new Error('SUPABASE_URL no está definida en las variables de entorno');
@@ -147,6 +154,7 @@ async function testConnection() {
 
 module.exports = {
     supabase,
+    STORAGE_BUCKETS,
     getPublicUrl,
     uploadFile,
     deleteFile,

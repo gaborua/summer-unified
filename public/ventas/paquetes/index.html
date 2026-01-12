@@ -158,22 +158,8 @@
             cursor: not-allowed;
         }
         
-        .navigation {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        
-        .navigation a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .navigation a:hover {
-            text-decoration: underline;
+        .company-header {
+            margin-bottom: 20px;
         }
         
         .total-display {
@@ -227,10 +213,13 @@
 </head>
 <body>
     <div class="container">
-        <!-- Navegación -->
-        <nav class="navigation">
-            <a href="/ventas/index.html">← Volver a Ventas</a>
-        </nav>
+        <!-- Información de la empresa (sin navegación) -->
+        <div class="company-header">
+            <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; border-radius: 8px; margin-bottom: 20px;">
+                <h2>🎉 SUMMER FESTIVAL</h2>
+                <p>Sistema de Registro de Ventas - RRPP</p>
+            </div>
+        </div>
 
         <!-- Formulario de Venta de Paquetes -->
         <div class="form-card">
@@ -520,20 +509,38 @@
 
                     // Opcional: Redirigir al dashboard después de 2 segundos
                     setTimeout(() => {
-                        window.location.href = '/ventas/dashboard.html';
+                        // Mantener al usuario en la misma página para registrar más ventas
+                        resetForm();
                     }, 2000);
                 } else {
                     showMessage(response.message || 'Error al registrar la venta', 'error');
                 }
-
             } catch (error) {
                 console.error('Error:', error);
-                showMessage('Error al procesar la venta. Inténtalo de nuevo.', 'error');
+                showMessage('Error de conexión. Intenta nuevamente.', 'error');
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = '💾 Registrar Venta de Paquete';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Registrar Venta de Paquete';
             }
-        });
+        }
+
+        // Función para resetear el formulario
+        function resetForm() {
+            document.getElementById('packageSaleForm').reset();
+            document.getElementById('fileName').textContent = '';
+            document.getElementById('totalAmount').textContent = 'Bs. 0';
+            
+            // Limpiar selección de paquete
+            document.querySelectorAll('.package-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Limpiar mensajes
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            console.log('✅ Formulario reseteado para nueva venta');
+        }
 
         // Mostrar mensajes
         function showMessage(message, type) {
