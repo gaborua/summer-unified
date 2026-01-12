@@ -1,0 +1,33 @@
+{
+  "name": "summer-unified",
+  "version": "1.0.0",
+  "description": "Sistema integral de gestión de eventos Summer Festival",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "node api/index.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gaborua/summer-unified.git"
+  },
+  "author": "Gabriel",
+  "license": "ISC",
+  "keywords": [
+    "events",
+    "sales",
+    "expenses",
+    "management",
+    "summer-festival"
+  ]
+}
