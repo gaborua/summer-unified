@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Paquetes - Summer Festival</title>
+    <link rel="stylesheet" href="/shared/css/global.css">
+    <link rel="stylesheet" href="/shared/css/variables.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .form-group.required label::after {
+            content: "*";
+            color: #dc3545;
+            margin-left: 4px;
+        }
+        
+        .package-selection {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+        }
+        
+        .package-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .package-option:hover {
+            border-color: var(--primary);
+        }
+        
+        .package-option.selected {
+            border-color: var(--primary);
+            background: #f0f8ff;
+        }
+        
+        .package-option input[type="radio"] {
+            margin-right: 10px;
+            width: auto;
+        }
+        
+        .package-info h4 {
+            margin: 0 0 5px 0;
+            color: var(--primary);
+        }
+        
+        .package-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .package-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary);
+        }
+        
+        .file-upload.dragover {
+            border-color: var(--primary);
+            background: #f0f8ff;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-primary:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .navigation {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .navigation a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+        
+        .total-display {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .total-display h3 {
+            margin: 0 0 10px 0;
+        }
+        
+        .events-included {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        
+        .events-included h5 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+        }
+        
+        .events-included ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navegación -->
+        <nav class="navigation">
+            <a href="/ventas/index.html">← Volver a Ventas</a>
+        </nav>
+
+        <!-- Formulario de Venta de Paquetes -->
+        <div class="form-card">
+            <div class="form-header">
+                <h1>🎁 Venta de Paquetes</h1>
+                <p>Registra una nueva venta de paquete que incluye múltiples eventos</p>
+            </div>
+
+            <!-- Mensajes -->
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <form id="packageSaleForm">
+                <!-- Selección de Paquete -->
+                <div class="form-group required">
+                    <label>Selecciona el Paquete</label>
+                    <div id="packagesContainer">
+                        <!-- Los paquetes se cargarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Información del Cliente -->
+                <div class="form-group required">
+                    <label for="customerName">Nombre del Cliente</label>
+                    <input type="text" id="customerName" name="customer_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerPhone">Teléfono</label>
+                    <input type="tel" id="customerPhone" name="customer_phone" placeholder="Ej: 70123456">
+                </div>
+
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" name="customer_email" placeholder="cliente@email.com">
+                </div>
+
+                <!-- Cantidad de Tickets -->
+                <div class="form-group required">
+                    <label for="ticketQuantity">Cantidad de Tickets</label>
+                    <input type="number" id="ticketQuantity" name="ticket_quantity" min="1" max="20" value="1" required>
+                </div>
+
+                <!-- Información del Vendedor -->
+                <div class="form-group">
+                    <label for="teamLeader">Team Leader</label>
+                    <input type="text" id="teamLeader" name="team_leader" placeholder="Responsable del equipo">
+                </div>
+
+                <div class="form-group">
+                    <label for="rrppName">RRPP/Vendedor</label>
+                    <input type="text" id="rrppName" name="rrpp_name" placeholder="Nombre del RRPP">
+                </div>
+
+                <!-- Ciudad -->
+                <div class="form-group">
+                    <label for="city">Ciudad</label>
+                    <select id="city" name="city">
+                        <option value="">Selecciona ciudad</option>
+                        <option value="Tarija">Tarija</option>
+                        <option value="Santa Cruz">Santa Cruz</option>
+                        <option value="Cochabamba">Cochabamba</option>
+                        <option value="La Paz">La Paz</option>
+                        <option value="Sucre">Sucre</option>
+                        <option value="Potosí">Potosí</option>
+                    </select>
+                </div>
+
+                <!-- Método de Pago -->
+                <div class="form-group required">
+                    <label for="paymentMethod">Método de Pago</label>
+                    <select id="paymentMethod" name="payment_method" required>
+                        <option value="transferencia">Transferencia Bancaria</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="qr">Pago QR</option>
+                        <option value="tarjeta">Tarjeta</option>
+                    </select>
+                </div>
+
+                <!-- Comprobante de Pago -->
+                <div class="form-group">
+                    <label for="receipt">Comprobante de Pago</label>
+                    <div class="file-upload" onclick="document.getElementById('receipt').click()">
+                        <input type="file" id="receipt" name="receipt" accept="image/*,.pdf" style="display: none;">
+                        <p>📁 Haz clic aquí para subir el comprobante</p>
+                        <p style="font-size: 0.9rem; color: #666;">Formatos: JPG, PNG, PDF (máx. 4MB)</p>
+                    </div>
+                    <div id="fileName" style="margin-top: 10px; color: var(--primary);"></div>
+                </div>
+
+                <!-- Total a Pagar -->
+                <div id="totalDisplay" class="total-display" style="display: none;">
+                    <h3>Total a Pagar</h3>
+                    <p id="totalAmount">Bs. 0</p>
+                    <p id="unitPrice">Precio por persona: Bs. 0</p>
+                    <div id="eventsIncluded" class="events-included" style="display: none;">
+                        <h5>Eventos Incluidos:</h5>
+                        <ul id="eventsList"></ul>
+                    </div>
+                </div>
+
+                <!-- Botón de Envío -->
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    💾 Registrar Venta de Paquete
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/shared/js/api-client.js"></script>
+    <script>
+        const api = new APIClient();
+        let packages = [];
+        let selectedPackage = null;
+
+        // Cargar paquetes disponibles
+        async function loadPackages() {
+            try {
+                // Simular datos de paquetes por ahora
+                packages = [
+                    {
+                        id: 1,
+                        package_name: 'Paquete Año Nuevo 2026',
+                        package_slug: 'paquete-ano-nuevo-2026',
+                        package_price: 850.00,
+                        discount_percent: 15,
+                        description: 'Incluye todos los eventos de Año Nuevo en todas las ciudades',
+                        events: [
+                            'Año Nuevo 2026 - Tarija',
+                            'Año Nuevo 2026 - Santa Cruz',
+                            'Año Nuevo 2026 - Cochabamba',
+                            'Año Nuevo 2026 - La Paz',
+                            'Año Nuevo 2026 - Sucre'
+                        ]
+                    },
+                    {
+                        id: 2,
+                        package_name: 'Paquete Carnaval 2026',
+                        package_slug: 'paquete-carnaval-2026',
+                        package_price: 450.00,
+                        discount_percent: 15,
+                        description: 'Incluye eventos de Carnaval en las principales ciudades',
+                        events: [
+                            'Carnaval 2026 - Tarija',
+                            'Carnaval 2026 - Santa Cruz',
+                            'Carnaval 2026 - Cochabamba'
+                        ]
+                    }
+                ];
+
+                renderPackages();
+            } catch (error) {
+                console.error('Error cargando paquetes:', error);
+                showMessage('Error cargando paquetes disponibles', 'error');
+            }
+        }
+
+        // Renderizar paquetes
+        function renderPackages() {
+            const container = document.getElementById('packagesContainer');
+            container.innerHTML = '';
+
+            packages.forEach(pkg => {
+                const packageOption = document.createElement('div');
+                packageOption.className = 'package-option';
+                packageOption.onclick = () => selectPackage(pkg);
+
+                packageOption.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <input type="radio" name="package" value="${pkg.id}" id="package_${pkg.id}">
+                        <div class="package-info">
+                            <h4>${pkg.package_name}</h4>
+                            <p>${pkg.description}</p>
+                            <p><strong>${pkg.events.length} eventos incluidos</strong></p>
+                        </div>
+                    </div>
+                    <div class="package-price">
+                        Bs. ${pkg.package_price.toFixed(2)}
+                        <br>
+                        <small style="color: #28a745;">-${pkg.discount_percent}% descuento</small>
+                    </div>
+                `;
+
+                container.appendChild(packageOption);
+            });
+        }
+
+        // Seleccionar paquete
+        function selectPackage(pkg) {
+            // Remover selección anterior
+            document.querySelectorAll('.package-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Seleccionar nuevo
+            selectedPackage = pkg;
+            event.currentTarget.classList.add('selected');
+            document.getElementById(`package_${pkg.id}`).checked = true;
+
+            // Actualizar total
+            updateTotal();
+
+            // Mostrar eventos incluidos
+            showIncludedEvents();
+        }
+
+        // Actualizar total
+        function updateTotal() {
+            if (!selectedPackage) {
+                document.getElementById('totalDisplay').style.display = 'none';
+                return;
+            }
+
+            const quantity = parseInt(document.getElementById('ticketQuantity').value) || 1;
+            const unitPrice = selectedPackage.package_price;
+            const totalAmount = unitPrice * quantity;
+
+            document.getElementById('totalDisplay').style.display = 'block';
+            document.getElementById('totalAmount').textContent = `Bs. ${totalAmount.toFixed(2)}`;
+            document.getElementById('unitPrice').textContent = `Precio por persona: Bs. ${unitPrice.toFixed(2)}`;
+        }
+
+        // Mostrar eventos incluidos
+        function showIncludedEvents() {
+            if (!selectedPackage) return;
+
+            const eventsContainer = document.getElementById('eventsIncluded');
+            const eventsList = document.getElementById('eventsList');
+
+            eventsContainer.style.display = 'block';
+            eventsList.innerHTML = '';
+
+            selectedPackage.events.forEach(event => {
+                const li = document.createElement('li');
+                li.textContent = event;
+                eventsList.appendChild(li);
+            });
+        }
+
+        // Manejar cambio en cantidad
+        document.getElementById('ticketQuantity').addEventListener('input', updateTotal);
+
+        // Manejar selección de archivo
+        document.getElementById('receipt').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const fileName = document.getElementById('fileName');
+            
+            if (file) {
+                fileName.textContent = `📁 ${file.name}`;
+            } else {
+                fileName.textContent = '';
+            }
+        });
+
+        // Manejar envío del formulario
+        document.getElementById('packageSaleForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (!selectedPackage) {
+                showMessage('Por favor selecciona un paquete', 'error');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Procesando...';
+
+            try {
+                const formData = new FormData(this);
+                formData.append('package_id', selectedPackage.id);
+
+                const response = await api.post('/sales/package', formData, {
+                    'Content-Type': 'multipart/form-data'
+                });
+
+                if (response.success) {
+                    showMessage('¡Venta de paquete registrada exitosamente!', 'success');
+                    
+                    // Limpiar formulario
+                    this.reset();
+                    selectedPackage = null;
+                    document.querySelectorAll('.package-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    document.getElementById('totalDisplay').style.display = 'none';
+                    document.getElementById('fileName').textContent = '';
+
+                    // Opcional: Redirigir al dashboard después de 2 segundos
+                    setTimeout(() => {
+                        window.location.href = '/ventas/dashboard.html';
+                    }, 2000);
+                } else {
+                    showMessage(response.message || 'Error al registrar la venta', 'error');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Error al procesar la venta. Inténtalo de nuevo.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '💾 Registrar Venta de Paquete';
+            }
+        });
+
+        // Mostrar mensajes
+        function showMessage(message, type) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+
+            // Ocultar ambos primero
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+
+            if (type === 'error') {
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                errorDiv.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                successDiv.textContent = message;
+                successDiv.style.display = 'block';
+                successDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Cargar paquetes al cargar la página
+        document.addEventListener('DOMContentLoaded', loadPackages);
+    </script>
+</body>
+</html>

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Read(C:\\Users\\gabri\\Downloads/**)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
