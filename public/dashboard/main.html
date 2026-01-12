@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer Unified - Dashboard Principal</title>
+    <link rel="stylesheet" href="/shared/css/global.css">
+    <style>
+        /* Estilos específicos del dashboard principal */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .module-card {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
+            text-align: center;
+            transition: transform .3s, box-shadow .3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-decoration: none;
+            display: block;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.40);
+            border-color: var(--primary);
+        }
+
+        .module-icon {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .module-description {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .module-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            font-weight: 900;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: transform .2s;
+        }
+
+        .module-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .module-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            margin-top: 10px;
+        }
+
+        .status-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-development {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        /* Financial Summary */
+        .financial-summary {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 24px;
+            border-radius: 16px;
+            border: 2px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-value.positive {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-value.neutral {
+            background: linear-gradient(135deg, var(--info) 0%, #1565c0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">🎉 SUMMER EVENTS</div>
+            <div class="subtitle">Sistema Integral de Gestión de Eventos</div>
+        </header>
+
+        <!-- Módulos del Sistema -->
+        <div class="modules-grid">
+            <a href="/ventas/dashboard.html" class="module-card">
+                <div class="module-icon">💰</div>
+                <div class="module-title">Ventas</div>
+                <div class="module-description">Gestión de ventas por paquetes e individuales</div>
+                <span class="module-btn">Ir al módulo →</span>
+                <span class="module-status status-active">✓ Activo</span>
+            </a>
+
+            <div class="module-card" onclick="alert('Módulo en desarrollo - Fase 2')" style="opacity: 0.7;">
+                <div class="module-icon">💸</div>
+                <div class="module-title">Gastos</div>
+                <div class="module-description">Control de gastos y aprobaciones</div>
+                <span class="module-btn">Proximamente</span>
+                <span class="module-status status-development">⏳ Fase 2</span>
+            </div>
+
+            <div class="module-card" onclick="alert('Módulo en desarrollo - Fase 3')" style="opacity: 0.7;">
+                <div class="module-icon">🧮</div>
+                <div class="module-title">Calculadora</div>
+                <div class="module-description">Proyecciones y análisis financiero</div>
+                <span class="module-btn">Proximamente</span>
+                <span class="module-status status-development">⏳ Fase 3</span>
+            </div>
+
+            <div class="module-card" onclick="alert('Módulo en desarrollo - Fase 4')" style="opacity: 0.7;">
+                <div class="module-icon">📊</div>
+                <div class="module-title">Reportes</div>
+                <div class="module-description">Reportes consolidados</div>
+                <span class="module-btn">Proximamente</span>
+                <span class="module-status status-development">⏳ Fase 4</span>
+            </div>
+        </div>
+
+        <!-- Resumen Financiero -->
+        <div class="financial-summary">
+            <h2 class="section-title">📊 Resumen Financiero General</h2>
+
+            <div id="loading" class="loading">
+                Cargando estadísticas...
+            </div>
+
+            <div id="stats" class="stats-grid" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-label">Total Ingresos</div>
+                    <div class="stat-value positive" id="totalIncome">Bs. 0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Gastos</div>
+                    <div class="stat-value neutral" id="totalExpenses">Bs. 0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Balance Neto</div>
+                    <div class="stat-value positive" id="netBalance">Bs. 0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Tickets</div>
+                    <div class="stat-value" id="totalTickets">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Ventas</div>
+                    <div class="stat-value" id="totalSales">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Eventos Activos</div>
+                    <div class="stat-value" id="activeEvents">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info del Sistema -->
+        <div class="card text-center">
+            <h3>ℹ️ Información del Sistema</h3>
+            <p><strong>Versión:</strong> 1.0.0</p>
+            <p><strong>Estado:</strong> <span class="pill pill-success">Fase 1 - Ventas Activo</span></p>
+            <p style="color: #666; margin-top: 20px;">
+                Los módulos de Gastos (Fase 2) y Calculadora (Fase 3) están en desarrollo
+            </p>
+        </div>
+    </div>
+
+    <script src="/shared/js/api-client.js"></script>
+    <script src="/shared/js/utils.js"></script>
+    <script>
+        // Cargar estadísticas del sistema
+        async function loadStats() {
+            try {
+                // Obtener estadísticas de ventas
+                const salesStats = await api.get('/sales/stats');
+
+                // Mostrar estadísticas
+                document.getElementById('totalIncome').textContent = formatCurrency(salesStats.total_revenue);
+                document.getElementById('totalExpenses').textContent = formatCurrency(0); // Fase 2
+                document.getElementById('netBalance').textContent = formatCurrency(salesStats.total_revenue);
+                document.getElementById('totalTickets').textContent = salesStats.total_tickets.toLocaleString();
+                document.getElementById('totalSales').textContent = salesStats.total_sales;
+                document.getElementById('activeEvents').textContent = '-'; // Fase 1
+
+                // Ocultar loading, mostrar stats
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('stats').style.display = 'grid';
+
+            } catch (error) {
+                console.error('Error cargando estadísticas:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p style="color: var(--error);">
+                        ❌ Error cargando estadísticas<br>
+                        <small>${error.message}</small><br>
+                        <small style="margin-top: 10px; display: block;">
+                            Asegúrate de que la base de datos esté configurada y las migraciones ejecutadas.
+                        </small>
+                    </p>
+                `;
+            }
+        }
+
+        // Cargar al iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+
+            // Actualizar cada 30 segundos
+            setInterval(loadStats, 30000);
+        });
+
+        // Info del sistema
+        console.log(`
+╔════════════════════════════════════════╗
+║   🎉 Summer Unified Dashboard          ║
+║   Version: 1.0.0                      ║
+║   Status: Phase 1 Active              ║
+╚════════════════════════════════════════╝
+        `);
+    </script>
+</body>
+
+</html>
