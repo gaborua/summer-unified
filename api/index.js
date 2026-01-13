@@ -3,6 +3,9 @@
  * Punto de entrada para todas las rutas de la API
  */
 
+// Cargar variables de entorno
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -14,6 +17,7 @@ const salesRoutes = require('./routes/sales');
 const expensesRoutes = require('./routes/expenses');
 const calculationsRoutes = require('./routes/calculations');
 const eventsRoutes = require('./routes/events');
+const packagesRoutes = require('./routes/packages');
 
 // Inicializar Express
 const app = express();
@@ -107,6 +111,7 @@ app.use('/api/sales', salesRoutes);
 app.use('/api/expenses', expensesRoutes);
 app.use('/api/calculations', calculationsRoutes);
 app.use('/api/events', eventsRoutes);
+app.use('/api/packages', packagesRoutes);
 
 // Estadísticas generales
 app.get('/api/stats/general', async (req, res) => {

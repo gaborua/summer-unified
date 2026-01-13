@@ -5,7 +5,11 @@
       "Bash(npm install)",
       "Bash(git push:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(taskkill:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Read(c:\\Users\\gabri\\Pictures\\Screenshots/**)"
     ],
     "deny": [],
     "ask": []

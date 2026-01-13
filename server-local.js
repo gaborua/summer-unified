@@ -3,6 +3,9 @@
  * Sirve archivos estáticos y maneja la API
  */
 
+// Cargar variables de entorno
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -11,9 +14,11 @@ const cors = require('cors');
 const salesRoutes = require('./api/routes/sales');
 const expensesRoutes = require('./api/routes/expenses');
 const calculationsRoutes = require('./api/routes/calculations');
+const eventsRoutes = require('./api/routes/events');
+const packagesRoutes = require('./api/routes/packages');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
@@ -27,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/sales', salesRoutes);
 app.use('/api/expenses', expensesRoutes);
 app.use('/api/calculations', calculationsRoutes);
+app.use('/api/events', eventsRoutes);
+app.use('/api/packages', packagesRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
