@@ -4,7 +4,8 @@
       "Read(C:\\Users\\gabri\\Downloads/**)",
       "Bash(npm install)",
       "Bash(git push:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

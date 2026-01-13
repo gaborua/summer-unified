@@ -1,0 +1,22 @@
+# Archivos que no deben incluirse en Vercel deployment
+
+# Archivos de desarrollo local
+server-local.js
+server-mock.js
+.env
+
+# Scripts de desarrollo y testing
+scripts/
+*.log
+
+# Cache y dependencias temporales
+node_modules/
+.npm/
+
+# Archivos de IDE
+.vscode/
+.idea/
+
+# Archivos temporales
+*.tmp
+*.temp

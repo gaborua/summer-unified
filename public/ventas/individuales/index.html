@@ -427,7 +427,7 @@
         async function loadAvailableEvents() {
             try {
                 console.log('🔄 Cargando eventos disponibles...');
-                const response = await api.get('/events');
+                const response = await api.get('/events', { active_only: 'true' });
                 availableEvents = response.data || response;
                 
                 renderEventsSelection();

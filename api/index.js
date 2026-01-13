@@ -13,6 +13,7 @@ const { createClient } = require('@supabase/supabase-js');
 const salesRoutes = require('./routes/sales');
 const expensesRoutes = require('./routes/expenses');
 const calculationsRoutes = require('./routes/calculations');
+const eventsRoutes = require('./routes/events');
 
 // Inicializar Express
 const app = express();
@@ -105,6 +106,7 @@ app.get('/api/deploy-info', (req, res) => {
 app.use('/api/sales', salesRoutes);
 app.use('/api/expenses', expensesRoutes);
 app.use('/api/calculations', calculationsRoutes);
+app.use('/api/events', eventsRoutes);
 
 // Estadísticas generales
 app.get('/api/stats/general', async (req, res) => {
