@@ -1258,7 +1258,7 @@
         async function loadEvents() {
             try {
                 console.log('🔄 Cargando eventos...');
-                const response = await api.get('/events', { active_only: 'true' });
+                const response = await api.get('/events', { active: 'true' });
                 events = response.data || response;
 
                 renderEvents();

@@ -40,6 +40,13 @@
             background: var(--primary-light);
             color: var(--primary);
         }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 
@@ -62,43 +69,39 @@
                 <!-- Columna 1: Crear Paquetes (Eventos Madre) -->
                 <section>
                     <div class="card">
-                        <h2>📦 Nuevo "Evento Madre" (Paquete)</h2>
-                        <p class="text-sm text-gray">Crea un paquete que agrupe varios eventos.</p>
+                        <div class="section-header">
+                            <h2>1. Evento Madre (Paquete)</h2>
+                            <span class="tag">Paso 1</span>
+                        </div>
+                        <p class="text-sm text-gray">Crea primero el evento principal ("Paquete").</p>
 
                         <form id="packageForm" class="mt-4">
                             <div class="form-group">
-                                <label>Nombre del Paquete</label>
-                                <input type="text" name="package_name" required placeholder="Ej: Pack Fin de Año">
+                                <label>Nombre del Evento Madre</label>
+                                <input type="text" name="package_name" required placeholder="Ej: Año Nuevo 2026">
                             </div>
                             <div class="form-group">
-                                <label>Precio (Bs)</label>
+                                <label>Precio Global (Bs)</label>
                                 <input type="number" name="package_price" required placeholder="0.00">
                             </div>
                             <div class="form-group">
-                                <label>Descuento (%)</label>
+                                <label>Descuento Global (%)</label>
                                 <input type="number" name="discount_percent" value="0" placeholder="0">
                             </div>
                             <div class="form-group">
                                 <label>Descripción</label>
-                                <textarea name="description" rows="2"></textarea>
+                                <textarea name="description" rows="2" placeholder="Detalles del paquete..."></textarea>
                             </div>
 
-                            <div class="form-group">
-                                <label>Seleccionar Eventos Incluidos</label>
-                                <div id="eventsSelection" class="checkbox-group">
-                                    <!-- Se llenará dinámicamente -->
-                                    <p class="text-sm">Cargando eventos...</p>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-full">Crear Paquete</button>
+                            <button type="submit" class="btn btn-primary w-full">Crear Evento Madre</button>
                         </form>
                     </div>
 
                     <div class="mt-8">
-                        <h3>Paquetes Activos</h3>
+                        <h3>Eventos Madre Activos</h3>
                         <div id="packagesList" class="mt-4">
                             <!-- Lista de paquetes -->
+                            <p class="text-gray text-sm">Cargando...</p>
                         </div>
                     </div>
                 </section>
@@ -106,13 +109,26 @@
                 <!-- Columna 2: Crear Eventos Individuales -->
                 <section>
                     <div class="card">
-                        <h2>📅 Nuevo Evento Individual</h2>
-                        <p class="text-sm text-gray">Agrega eventos sueltos que componen los paquetes.</p>
+                        <div class="section-header">
+                            <h2>2. Evento Individual</h2>
+                            <span class="tag">Paso 2</span>
+                        </div>
+                        <p class="text-sm text-gray">Crea eventos y asígnalos a un Evento Madre.</p>
 
                         <form id="eventForm" class="mt-4">
                             <div class="form-group">
+                                <label>Pertenece a Evento Madre:</label>
+                                <select name="package_id" id="packageSelect" required>
+                                    <option value="">-- Seleccionar --</option>
+                                    <!-- Se llenará dinámicamente -->
+                                </select>
+                            </div>
+
+                            <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                            <div class="form-group">
                                 <label>Nombre del Evento</label>
-                                <input type="text" name="event_name" required placeholder="Ej: Fiesta de Bienvenida">
+                                <input type="text" name="event_name" required placeholder="Ej: Welcome Party">
                             </div>
                             <div class="form-group">
                                 <label>Fecha</label>
@@ -128,18 +144,19 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Precio Individual Estimado</label>
+                                <label>Precio Individual (Ref)</label>
                                 <input type="number" name="base_price" placeholder="0.00">
                             </div>
 
-                            <button type="submit" class="btn btn-secondary w-full">Crear Evento</button>
+                            <button type="submit" class="btn btn-secondary w-full">Crear Y Asignar</button>
                         </form>
                     </div>
 
                     <div class="mt-8">
-                        <h3>Eventos Disponibles</h3>
+                        <h3>Eventos Individuales</h3>
                         <div id="eventsList" class="mt-4">
                             <!-- Lista de eventos -->
+                            <p class="text-gray text-sm">Cargando...</p>
                         </div>
                     </div>
                 </section>
@@ -153,38 +170,41 @@
         // Elementos DOM
         const eventsList = document.getElementById('eventsList');
         const packagesList = document.getElementById('packagesList');
-        const eventsSelection = document.getElementById('eventsSelection');
+        const packageSelect = document.getElementById('packageSelect');
 
         // Cargar datos al inicio
         document.addEventListener('DOMContentLoaded', () => {
-            loadEvents();
-            loadPackages();
+            loadInitialData();
 
             document.getElementById('packageForm').addEventListener('submit', handlePackageSubmit);
             document.getElementById('eventForm').addEventListener('submit', handleEventSubmit);
         });
+
+        async function loadInitialData() {
+            await Promise.all([loadPackages(), loadEvents()]);
+        }
 
         // ==========================================
         // CARGAR DATOS
         // ==========================================
         async function loadEvents() {
             try {
-                // Sencillo fallback en caso de no existir ruta events directa
-                const result = await api.get('/events').catch(() => []);
+                // Obtener eventos (podemos filtrar por activos si queremos)
+                const result = await api.get('/events?active=true');
                 const events = Array.isArray(result) ? result : [];
-
                 renderEventsList(events);
-                renderEventsSelection(events);
             } catch (error) {
                 console.error('Error loading events:', error);
-                eventsSelection.innerHTML = '<p class="text-error">Error cargando eventos</p>';
+                eventsList.innerHTML = '<p class="text-error">Error cargando eventos</p>';
             }
         }
 
         async function loadPackages() {
             try {
-                const packages = await api.get('/packages');
+                // Pedimos incluir inactivos si quisiéramos mostrarlos, pero para el select queremos activos
+                const packages = await api.get('/packages'); // default is active only
                 renderPackagesList(packages);
+                renderPackageSelect(packages);
             } catch (error) {
                 console.error('Error loading packages:', error);
             }
@@ -193,25 +213,19 @@
         // ==========================================
         // RENDERIZADO
         // ==========================================
-        function renderEventsSelection(events) {
-            if (!events || events.length === 0) {
-                eventsSelection.innerHTML = '<p class="text-sm text-gray">No hay eventos disponibles</p>';
+        function renderPackageSelect(packages) {
+            if (!packages || packages.length === 0) {
+                packageSelect.innerHTML = '<option value="">No hay Eventos Madre activos</option>';
                 return;
             }
 
-            eventsSelection.innerHTML = events.map(event => `
-                <div class="checkbox-item" style="margin-bottom: 0.5rem;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                        <input type="checkbox" name="event_ids" value="${event.id}">
-                        <span>${event.event_name} (${new Date(event.event_date).toLocaleDateString()}) - ${event.city}</span>
-                    </label>
-                </div>
-            `).join('');
+            const options = packages.map(p => `<option value="${p.id}">${p.package_name}</option>`).join('');
+            packageSelect.innerHTML = '<option value="">-- Seleccionar --</option>' + options;
         }
 
         function renderEventsList(events) {
             if (!events || events.length === 0) {
-                eventsList.innerHTML = '<p>No hay eventos registrados</p>';
+                eventsList.innerHTML = '<p class="text-sm">No hay eventos individuales.</p>';
                 return;
             }
 
@@ -223,8 +237,8 @@
                             <p class="text-sm text-gray">
                                 📅 ${new Date(event.event_date).toLocaleDateString()} | 📍 ${event.city}
                             </p>
-                            <p class="text-sm font-bold mt-1">Precio ref: Bs ${event.base_price || '0.00'}</p>
                         </div>
+                        <button onclick="deactivateEvent('${event.id}')" class="btn btn-sm" style="background: #fee2e2; color: #dc2626; padding: 2px 8px; font-size: 0.8rem; border:none;  cursor: pointer;">X</button>
                     </div>
                 </div>
             `).join('');
@@ -232,7 +246,7 @@
 
         function renderPackagesList(packages) {
             if (!packages || packages.length === 0) {
-                packagesList.innerHTML = '<p>No hay paquetes activos</p>';
+                packagesList.innerHTML = '<p class="text-sm">No hay eventos madre.</p>';
                 return;
             }
 
@@ -240,23 +254,17 @@
                 <div class="package-card">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div>
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <h4>${pkg.package_name}</h4>
-                                ${pkg.discount_percent > 0 ? `<span class="tag">-${pkg.discount_percent}% OFF</span>` : ''}
-                            </div>
-                            <h3 class="text-primary mt-1">Bs ${pkg.package_price}</h3>
-                            <p class="text-sm text-gray mt-2">${pkg.description || 'Sin descripción'}</p>
-                            
-                            <div class="mt-3">
-                                <p class="text-xs font-bold uppercase text-gray">Incluye:</p>
-                                <ul style="list-style: disc; margin-left: 1.5rem; font-size: 0.9rem;" class="mt-1">
+                            <h4>${pkg.package_name}</h4>
+                            <div class="mt-2">
+                                <p class="text-xs font-bold uppercase text-gray">Eventos Incluidos:</p>
+                                <ul style="list-style: disc; margin-left: 1.5rem; font-size: 0.85rem;" class="mt-1">
                                     ${pkg.events && pkg.events.length > 0
                     ? pkg.events.map(e => `<li>${e.event_name}</li>`).join('')
-                    : '<li>Sin eventos asignados</li>'}
+                    : '<li class="text-gray">Sin eventos asignados</li>'}
                                 </ul>
                             </div>
                         </div>
-                        <button onclick="deactivatePackage('${pkg.id}')" class="btn btn-sm" style="background: #fee2e2; color: #dc2626; cursor: pointer; border:none; padding: 5px 10px; border-radius: 4px;">Desactivar</button>
+                        <button onclick="deactivatePackage('${pkg.id}')" class="btn btn-sm" style="background: #fee2e2; color: #dc2626; padding: 2px 8px; border:none; cursor: pointer; border-radius: 4px;">X</button>
                     </div>
                 </div>
             `).join('');
@@ -270,26 +278,21 @@
             const form = e.target;
             const formData = new FormData(form);
 
-            // Obtener IDs de eventos seleccionados
-            const selectedEvents = Array.from(form.querySelectorAll('input[name="event_ids"]:checked'))
-                .map(cb => cb.value);
-
             const data = {
                 package_name: formData.get('package_name'),
                 package_price: parseFloat(formData.get('package_price')),
                 discount_percent: parseInt(formData.get('discount_percent')) || 0,
-                description: formData.get('description'),
-                event_ids: selectedEvents
+                description: formData.get('description')
             };
 
             try {
                 await api.post('/packages', data);
-                alert('✅ Paquete creado exitosamente');
+                alert('✅ Evento Madre creado');
                 form.reset();
-                loadPackages();
+                loadPackages(); // Update list and select
             } catch (error) {
                 console.error(error);
-                alert('Error al crear paquete: ' + error.message);
+                alert('Error: ' + error.message);
             }
         }
 
@@ -297,38 +300,48 @@
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
+            const packageId = formData.get('package_id');
+
+            if (!packageId) {
+                alert('⚠️ Por favor selecciona un Evento Madre');
+                return;
+            }
 
             const data = {
                 event_name: formData.get('event_name'),
                 event_date: formData.get('event_date'),
                 city: formData.get('city'),
                 base_price: parseFloat(formData.get('base_price')) || 0,
-                event_slug: formData.get('event_name').toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, ''),
-                venue: 'Por definir', // Default
-                image_url: null,
-                is_active: true
+                package_id: packageId // Send this to API
             };
 
             try {
                 await api.post('/events', data);
-                alert('✅ Evento creado exitosamente');
+                alert('✅ Evento creado y asignado exitosamente');
                 form.reset();
-                loadEvents();
+                // Refresh both lists to show the new event in the list AND inside the package
+                loadInitialData();
             } catch (error) {
                 console.error(error);
                 alert('Error al crear evento: ' + error.message);
             }
         }
 
-        // Hacer global
+        // Global Deactivate functions
         window.deactivatePackage = async function (id) {
-            if (!confirm('¿Seguro que quieres desactivar este paquete?')) return;
+            if (!confirm('¿Desactivar este paquete? Ya no saldrá en ventas.')) return;
             try {
                 await api.delete(`/packages/${id}`);
                 loadPackages();
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
+            } catch (error) { alert(error.message); }
+        }
+
+        window.deactivateEvent = async function (id) {
+            if (!confirm('¿Desactivar este evento?')) return;
+            try {
+                await api.delete(`/events/${id}`);
+                loadEvents();
+            } catch (error) { alert(error.message); }
         }
     </script>
 </body>

@@ -13,7 +13,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // ==========================================
 router.get('/', async (req, res) => {
     try {
-        const { data: packages, error } = await supabase
+        let query = supabase
             .from('packages')
             .select(`
                 *,
@@ -27,8 +27,14 @@ router.get('/', async (req, res) => {
                     )
                 )
             `)
-            .eq('is_active', true)
             .order('created_at', { ascending: false });
+
+        // Por defecto solo activos, a menos que se pida incluir inactivos
+        if (req.query.include_inactive !== 'true') {
+            query = query.eq('is_active', true);
+        }
+
+        const { data: packages, error } = await query;
 
         if (error) throw error;
 
