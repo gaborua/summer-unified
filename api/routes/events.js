@@ -16,7 +16,16 @@ router.get('/', async (req, res) => {
     try {
         let query = supabase
             .from('events')
-            .select('*')
+            .select(`
+                *,
+                package_events (
+                    package_id,
+                    packages (
+                        id,
+                        package_name
+                    )
+                )
+            `)
             .order('event_date', { ascending: true });
 
         // Filtrar por activos si se solicita

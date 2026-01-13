@@ -229,7 +229,14 @@
                 return;
             }
 
-            eventsList.innerHTML = events.map(event => `
+            eventsList.innerHTML = events.map(event => {
+                // Extract parent package name if exists
+                let parentPackage = 'Sin asignar';
+                if (event.package_events && event.package_events.length > 0 && event.package_events[0].packages) {
+                    parentPackage = event.package_events[0].packages.package_name;
+                }
+
+                return `
                 <div class="event-card">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div>
@@ -237,11 +244,15 @@
                             <p class="text-sm text-gray">
                                 📅 ${new Date(event.event_date).toLocaleDateString()} | 📍 ${event.city}
                             </p>
+                            <p class="text-xs mt-1" style="color: var(--primary);">
+                                📦 Evento Madre: <strong>${parentPackage}</strong>
+                            </p>
                         </div>
                         <button onclick="deactivateEvent('${event.id}')" class="btn btn-sm" style="background: #fee2e2; color: #dc2626; padding: 2px 8px; font-size: 0.8rem; border:none;  cursor: pointer;">X</button>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         function renderPackagesList(packages) {
