@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,8 +102,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .form-container {
@@ -301,7 +309,7 @@
             background: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             max-width: 300px;
         }
 
@@ -330,7 +338,7 @@
             border-radius: 8px;
             margin: 0 auto 15px auto;
             padding: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .qr-image {
@@ -454,7 +462,7 @@
             letter-spacing: 8px;
             margin: 0;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .summer-subtitle {
@@ -471,7 +479,7 @@
             padding: 30px;
             max-width: 500px;
             margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         /* Título del formulario */
@@ -695,7 +703,7 @@
         .register-btn:hover {
             background: linear-gradient(135deg, #8e1551, #6d1041);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* Responsive para formulario individual */
@@ -704,12 +712,12 @@
                 font-size: 2.5rem;
                 letter-spacing: 4px;
             }
-            
+
             .individual-form-card {
                 margin: 0 10px;
                 padding: 20px;
             }
-            
+
             .file-upload-simple {
                 flex-direction: column;
                 align-items: flex-start;
@@ -903,6 +911,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header de la empresa -->
@@ -929,12 +938,19 @@
 
         <!-- Mensajes de estado -->
         <div id="alertContainer"></div>
-        
+
         <!-- DEBUG: Botones de prueba temporal -->
-        <div style="position: fixed; top: 10px; right: 10px; z-index: 9999; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px;">
-            <button onclick="testSwitchToPackages()" style="background: #e91e63; color: white; border: none; padding: 5px; margin: 2px; border-radius: 3px; font-size: 12px;">Test Paquetes</button>
-            <button onclick="testSwitchToIndividual()" style="background: #e91e63; color: white; border: none; padding: 5px; margin: 2px; border-radius: 3px; font-size: 12px;">Test Individual</button>
-            <button onclick="checkTabs()" style="background: #666; color: white; border: none; padding: 5px; margin: 2px; border-radius: 3px; font-size: 12px;">Check Tabs</button>
+        <div
+            style="position: fixed; top: 10px; right: 10px; z-index: 9999; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px;">
+            <button onclick="testSwitchToPackages()"
+                style="background: #e91e63; color: white; border: none; padding: 5px; margin: 2px; border-radius: 3px; font-size: 12px;">Test
+                Paquetes</button>
+            <button onclick="testSwitchToIndividual()"
+                style="background: #e91e63; color: white; border: none; padding: 5px; margin: 2px; border-radius: 3px; font-size: 12px;">Test
+                Individual</button>
+            <button onclick="checkTabs()"
+                style="background: #666; color: white; border: none; padding: 5px; margin: 2px; border-radius: 3px; font-size: 12px;">Check
+                Tabs</button>
         </div>
 
         <!-- PESTAÑA: PAQUETES -->
@@ -952,13 +968,13 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Nombre del Cliente <span class="required">*</span></label>
-                                <input type="text" name="customer_name" class="form-control" required 
-                                       placeholder="Nombre completo del cliente">
+                                <input type="text" name="customer_name" class="form-control" required
+                                    placeholder="Nombre completo del cliente">
                             </div>
                             <div class="form-group">
                                 <label>Nombre del RRPP <span class="required">*</span></label>
-                                <input type="text" name="rrpp_name" class="form-control" required 
-                                       placeholder="Tu nombre como RRPP">
+                                <input type="text" name="rrpp_name" class="form-control" required
+                                    placeholder="Tu nombre como RRPP">
                             </div>
                         </div>
                     </div>
@@ -971,7 +987,7 @@
                                 <p>🔄 Cargando paquetes disponibles...</p>
                             </div>
                         </div>
-                        
+
                         <!-- Cantidad de paquetes -->
                         <div class="package-quantity-section" id="packageQuantitySection" style="display: none;">
                             <div class="form-row">
@@ -983,8 +999,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Cantidad de Paquetes <span class="required">*</span></label>
-                                    <input type="number" id="packageQuantity" name="package_quantity" 
-                                           class="form-control" min="1" value="1" required>
+                                    <input type="number" id="packageQuantity" name="package_quantity"
+                                        class="form-control" min="1" value="1" required>
                                 </div>
                             </div>
                         </div>
@@ -993,7 +1009,7 @@
                     <!-- QR y Pago -->
                     <div class="form-section">
                         <h3>💳 Información de Pago</h3>
-                        
+
                         <!-- QR de Pago -->
                         <div class="qr-payment-section">
                             <div class="qr-container">
@@ -1002,15 +1018,8 @@
                                     <h4>Escanea para Pagar</h4>
                                     <p>Usa tu app bancaria para escanear el QR y realizar el pago</p>
                                     <div class="qr-code" id="qrCodeDisplay">
-                                        <div class="qr-placeholder-temp" style="width: 280px; height: 350px; background: #f0f0f0; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed #ccc;">
-                                            <div style="font-size: 3rem; margin-bottom: 10px;">📱</div>
-                                            <div style="text-align: center; color: #666; font-size: 0.9rem;">
-                                                <strong>QR de Pago ZAS</strong><br>
-                                                ACHA VILLARROEL JUAN PABLO<br>
-                                                Cuenta: 6031280718<br>
-                                                <small>Imagen QR temporal para testing</small>
-                                            </div>
-                                        </div>
+                                        <img src="/shared/img/qr_zas.jpg" alt="QR de Pago ZAS"
+                                            style="max-width: 280px; width: 100%; height: auto; border-radius: 8px;">
                                     </div>
                                     <div class="payment-info">
                                         <p><strong>Pagar a:</strong> ACHA VILLARROEL JUAN PABLO</p>
@@ -1020,15 +1029,15 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Upload de Comprobante -->
                         <div class="receipt-upload-section">
                             <h4>📄 Adjuntar Comprobante de Pago</h4>
                             <div class="upload-area" id="packageReceiptUpload">
                                 <div class="upload-icon">📎</div>
                                 <p>Haz clic aquí o arrastra el comprobante de pago</p>
-                                <input type="file" id="packageReceiptFile" name="receipt_file" 
-                                       accept="image/*,.pdf" style="display: none;">
+                                <input type="file" id="packageReceiptFile" name="receipt_file" accept="image/*,.pdf"
+                                    style="display: none;">
                             </div>
                             <div class="uploaded-file-info" id="packageFileInfo" style="display: none;">
                                 <span class="file-name"></span>
@@ -1062,7 +1071,7 @@
                     <h1>SUMMER</h1>
                     <p class="summer-subtitle">AÑO NUEVO 2026<br>26-31 DIC</p>
                 </div>
-                
+
                 <div class="individual-form-card">
                     <form id="individualForm">
                         <!-- Título del formulario -->
@@ -1074,7 +1083,8 @@
                         <div class="basic-fields">
                             <div class="field-group">
                                 <label>👤 Team Leader *</label>
-                                <input type="text" name="team_leader" placeholder="Ingrese el nombre del leader" required>
+                                <input type="text" name="team_leader" placeholder="Ingrese el nombre del leader"
+                                    required>
                             </div>
                             <div class="field-group">
                                 <label>👥 Nombre del RRPP *</label>
@@ -1092,23 +1102,20 @@
                             </div>
                         </div>
 
-                    <!-- Total individual -->
-                    <div id="individualTotal" class="total-calculation" style="display: none;">
-                        <div class="total-amount" id="individualTotalAmount">Bs. 0</div>
-                        <div id="individualTotalBreakdown">0 tickets seleccionados</div>
-                    </div>
+                        <!-- Total individual -->
+                        <div id="individualTotal" class="total-calculation" style="display: none;">
+                            <div class="total-amount" id="individualTotalAmount">Bs. 0</div>
+                            <div id="individualTotalBreakdown">0 tickets seleccionados</div>
+                        </div>
 
                         <!-- QR de Pago -->
                         <div class="qr-payment-box">
                             <h4>💳 Escanea para Pagar con ZAS</h4>
                             <div class="qr-container-individual">
-                                <div class="qr-placeholder-temp" style="width: 200px; height: 250px; background: #f0f0f0; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed #ccc;">
-                                    <div style="font-size: 2.5rem; margin-bottom: 10px;">📱</div>
-                                    <div style="text-align: center; color: #666; font-size: 0.8rem;">
-                                        <strong>QR ZAS</strong><br>
-                                        ACHA VILLARROEL<br>
-                                        <small>QR temporal</small>
-                                    </div>
+                                <div class="qr-placeholder-temp"
+                                    style="width: 250px; background: white; border-radius: 8px; padding: 10px; border: 1px solid #ddd;">
+                                    <img src="/shared/img/qr_zas.jpg" alt="QR de Pago ZAS" class="qr-image-individual"
+                                        style="width: 100%; height: auto; display: block;">
                                 </div>
                             </div>
                             <div class="payment-details">
@@ -1123,8 +1130,10 @@
                         <div class="upload-section">
                             <label>📄 Comprobante de Pago *</label>
                             <div class="file-upload-simple">
-                                <input type="file" id="individualReceiptFile" name="receipt_file" accept="image/*,.pdf" style="display: none;">
-                                <button type="button" class="file-select-btn" onclick="document.getElementById('individualReceiptFile').click()">
+                                <input type="file" id="individualReceiptFile" name="receipt_file" accept="image/*,.pdf"
+                                    style="display: none;">
+                                <button type="button" class="file-select-btn"
+                                    onclick="document.getElementById('individualReceiptFile').click()">
                                     Seleccionar archivo
                                 </button>
                                 <span class="file-status">Ningún archivo seleccionado</span>
@@ -1145,7 +1154,7 @@
     <script>
         // Cliente API
         const api = new APIClient();
-        
+
         // Estado de la aplicación
         let packages = [];
         let events = [];
@@ -1163,26 +1172,26 @@
         // Función simple para cambio de pestañas
         function switchTabSimple(tabName, button) {
             console.log('🔄 Cambiando a pestaña:', tabName);
-            
+
             // Remover clase active de todos los botones
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
+
             // Agregar clase active al botón clickeado
             button.classList.add('active');
-            
+
             // Remover clase active de todas las pestañas
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            
+
             // Mostrar la pestaña seleccionada
             const targetTab = document.getElementById(tabName + 'Tab');
             if (targetTab) {
                 targetTab.classList.add('active');
                 console.log('✅ Pestaña cambiada a:', tabName);
-                
+
                 // Cargar datos según la pestaña
                 if (tabName === 'packages') {
                     console.log('📦 Cargando datos de paquetes');
@@ -1232,14 +1241,14 @@
                 console.log('🔄 Cargando paquetes...');
                 const response = await api.get('/packages');
                 packages = response.data || response;
-                
+
                 renderPackages();
                 console.log('✅ Paquetes cargados:', packages.length);
-                
+
             } catch (error) {
                 console.error('❌ Error cargando paquetes:', error);
                 showAlert(`Error cargando paquetes: ${error.message}`, 'error');
-                document.getElementById('packagesGrid').innerHTML = 
+                document.getElementById('packagesGrid').innerHTML =
                     '<p style="text-align: center; color: var(--error);">Error cargando paquetes</p>';
             }
         }
@@ -1250,14 +1259,14 @@
                 console.log('🔄 Cargando eventos...');
                 const response = await api.get('/events', { active_only: 'true' });
                 events = response.data || response;
-                
+
                 renderEvents();
                 console.log('✅ Eventos cargados:', events.length);
-                
+
             } catch (error) {
                 console.error('❌ Error cargando eventos:', error);
                 showAlert(`Error cargando eventos: ${error.message}`, 'error');
-                document.getElementById('eventsSelection').innerHTML = 
+                document.getElementById('eventsSelection').innerHTML =
                     '<p style="text-align: center; color: var(--error);">Error cargando eventos</p>';
             }
         }
@@ -1269,7 +1278,7 @@
         // Renderizar paquetes
         function renderPackages() {
             const grid = document.getElementById('packagesGrid');
-            
+
             if (!packages || packages.length === 0) {
                 grid.innerHTML = '<p style="text-align: center;">No hay paquetes disponibles</p>';
                 return;
@@ -1301,7 +1310,7 @@
             `).join('');
 
             grid.innerHTML = packagesHTML;
-            
+
             // Cargar eventos para cada paquete
             packages.forEach(pkg => loadPackageEvents(pkg.id));
         }
@@ -1309,7 +1318,7 @@
         // Renderizar eventos individuales
         function renderEvents() {
             const container = document.getElementById('eventsSelection');
-            
+
             if (!events || events.length === 0) {
                 container.innerHTML = '<p style="text-align: center;">No hay eventos disponibles</p>';
                 return;
@@ -1354,7 +1363,7 @@
             const checkbox = document.getElementById(`event-${eventId}`);
             const quantityInput = document.getElementById(`quantity-${eventId}`);
             const eventItem = checkbox.closest('.event-item-individual');
-            
+
             if (checkbox.checked) {
                 quantityInput.disabled = false;
                 eventItem.classList.add('selected');
@@ -1363,7 +1372,7 @@
                 quantityInput.value = 1;
                 eventItem.classList.remove('selected');
             }
-            
+
             updateIndividualTotal();
         }
 
@@ -1372,16 +1381,16 @@
             try {
                 const response = await api.get(`/packages/${packageId}/events`);
                 const packageEvents = response.data || [];
-                
+
                 const eventsList = document.getElementById(`package-events-${packageId}`);
                 if (packageEvents.length > 0) {
-                    eventsList.innerHTML = packageEvents.map(event => 
+                    eventsList.innerHTML = packageEvents.map(event =>
                         `<li>${event.event_name} - ${event.city}</li>`
                     ).join('');
                 } else {
                     eventsList.innerHTML = '<li>No hay eventos asociados</li>';
                 }
-                
+
             } catch (error) {
                 console.error('Error cargando eventos del paquete:', error);
                 const eventsList = document.getElementById(`package-events-${packageId}`);
@@ -1413,10 +1422,10 @@
                     <span style="color: var(--primary);">Bs. ${parseFloat(selectedPackage.package_price).toLocaleString()}</span>
                     ${selectedPackage.discount_percent ? `<br><span style="color: var(--success); font-size: 0.9rem;">✅ ${selectedPackage.discount_percent}% descuento</span>` : ''}
                 `;
-                
+
                 // Mostrar sección de cantidad
                 document.getElementById('packageQuantitySection').style.display = 'block';
-                
+
                 // Actualizar total inicial
                 updatePackageTotal();
             }
@@ -1425,13 +1434,13 @@
         // Actualizar total de paquetes
         function updatePackageTotal() {
             const quantity = parseInt(document.getElementById('packageQuantity').value) || 1;
-            
+
             if (selectedPackage && quantity > 0) {
                 const total = parseFloat(selectedPackage.package_price) * quantity;
-                
+
                 document.getElementById('packageTotal').style.display = 'block';
                 document.getElementById('packageTotalAmount').textContent = `Bs. ${total.toLocaleString()}`;
-                document.getElementById('packageTotalBreakdown').textContent = 
+                document.getElementById('packageTotalBreakdown').textContent =
                     `${quantity} × ${selectedPackage.package_name} = Bs. ${total.toLocaleString()}`;
             } else {
                 document.getElementById('packageTotal').style.display = 'none';
@@ -1466,13 +1475,13 @@
             const totalContainer = document.getElementById('individualTotal');
             if (totalTickets > 0) {
                 totalContainer.style.display = 'block';
-                document.getElementById('individualTotalAmount').textContent = 
+                document.getElementById('individualTotalAmount').textContent =
                     `Bs. ${totalAmount.toLocaleString()}`;
-                
-                const breakdown = selectedEvents.map(e => 
+
+                const breakdown = selectedEvents.map(e =>
                     `${e.quantity} × ${e.event_name}`
                 ).join(' + ');
-                document.getElementById('individualTotalBreakdown').textContent = 
+                document.getElementById('individualTotalBreakdown').textContent =
                     `${totalTickets} tickets: ${breakdown}`;
             } else {
                 totalContainer.style.display = 'none';
@@ -1517,7 +1526,7 @@
             uploadArea.addEventListener('drop', (e) => {
                 e.preventDefault();
                 uploadArea.classList.remove('drag-over');
-                
+
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
                     fileInput.files = files;
@@ -1533,7 +1542,7 @@
         // Enviar formulario de paquete
         async function submitPackageForm(e) {
             e.preventDefault();
-            
+
             if (!selectedPackage) {
                 showAlert('Selecciona un paquete', 'error');
                 return;
@@ -1556,7 +1565,7 @@
         // Enviar formulario individual
         async function submitIndividualForm(e) {
             e.preventDefault();
-            
+
             if (selectedEvents.length === 0) {
                 showAlert('Selecciona al menos un evento', 'error');
                 return;
@@ -1584,9 +1593,9 @@
                 submitLoading.style.display = 'inline';
 
                 const response = await api.postForm(`/sales/${type}`, formData);
-                
+
                 showAlert('✅ Venta registrada exitosamente', 'success');
-                
+
                 // Resetear formulario después de 2 segundos
                 setTimeout(() => {
                     resetForm(type);
@@ -1606,7 +1615,7 @@
         function resetForm(type) {
             const form = document.getElementById(`${type}Form`);
             form.reset();
-            
+
             if (type === 'package') {
                 document.querySelectorAll('.package-card').forEach(card => {
                     card.classList.remove('selected');
@@ -1634,9 +1643,9 @@
         function showAlert(message, type) {
             const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
             alertContainer.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
-            
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            
+
             setTimeout(() => {
                 alertContainer.innerHTML = '';
             }, 5000);
@@ -1662,7 +1671,7 @@
             const fileInfo = document.getElementById('packageFileInfo');
 
             uploadArea.addEventListener('click', () => fileInput.click());
-            
+
             uploadArea.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 uploadArea.classList.add('dragover');
@@ -1693,7 +1702,7 @@
         function handlePackageFileSelect(file) {
             const fileInfo = document.getElementById('packageFileInfo');
             const fileName = fileInfo.querySelector('.file-name');
-            
+
             if (file.size > 4 * 1024 * 1024) {
                 showAlert('El archivo es muy grande. Máximo 4MB.', 'error');
                 document.getElementById('packageReceiptFile').value = '';
@@ -1714,7 +1723,7 @@
         function setupIndividualFileUpload() {
             const fileInput = document.getElementById('individualReceiptFile');
             const fileStatus = document.querySelector('.file-status');
-            
+
             fileInput.addEventListener('change', () => {
                 if (fileInput.files.length > 0) {
                     const file = fileInput.files[0];
@@ -1733,48 +1742,30 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             console.log('🚀 Iniciando sistema de ventas unificado');
-            
+
             // Test de pestañas
-            console.log('🧪 Testing tab functionality...');
             const packagesTab = document.getElementById('packagesTab');
             const individualTab = document.getElementById('individualTab');
-            console.log('📦 packagesTab encontrada:', !!packagesTab);
-            console.log('🎫 individualTab encontrada:', !!individualTab);
-            
-            // Test función switchTabSimple
-            if (typeof switchTabSimple === 'function') {
-                console.log('✅ switchTabSimple está disponible');
-                
-                // Test directo después de 2 segundos
-                setTimeout(() => {
-                    console.log('🧪 Probando cambio a individual después de 2 segundos...');
-                    const individualButton = document.querySelector('[onclick*="individual"]');
-                    if (individualButton) {
-                        switchTabSimple('individual', individualButton);
-                    }
-                }, 2000);
-            } else {
-                console.error('❌ switchTabSimple NO está disponible');
-            }
-            
+
             // Configurar upload de archivos
-            setupFileUpload('packageFileUpload', 'receipt', 'packageFileName');
-            setupFileUpload('individualFileUpload', 'receipt', 'individualFileName');
+            // setupFileUpload('packageFileUpload', 'receipt', 'packageFileName'); // Eliminado: IDs no existen
+            // setupFileUpload('individualFileUpload', 'receipt', 'individualFileName'); // Eliminado: IDs no existen
             setupPackageFileUpload();
             setupIndividualFileUpload();
-            
+
             // Configurar formularios
             document.getElementById('packageForm').addEventListener('submit', submitPackageForm);
             document.getElementById('individualForm').addEventListener('submit', submitIndividualForm);
-            
+
             // Configurar evento de cantidad de paquetes
             document.getElementById('packageQuantity').addEventListener('input', updatePackageTotal);
-            
+
             // Cargar datos iniciales (paquetes por defecto)
             loadPackages();
-            
+
             console.log('✅ Sistema inicializado');
         });
     </script>
 </body>
+
 </html>
